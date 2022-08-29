@@ -4,7 +4,15 @@ const chalk = require('chalk')
 const path = require('path')
 const Mock = require('mockjs')
 
+const fs = require('fs')
+const JSON5 = require('json5')
+
 const mockDir = path.join(process.cwd(), 'mock')
+
+function getJsonFile( filePath ) {
+  var json = fs.readFileSync(path.join(__dirname, filePath), 'utf-8')
+  return  JSON5.parse(json)
+}
 
 function registerRoutes(app) {
   let mockLastIndex
@@ -44,6 +52,10 @@ const responseFake = (url, type, respond) => {
 }
 
 module.exports = app => {
+  app.get('/user/userinfo', function (rep, res) {
+    var json = getJsonFile('./userinfo.json5')
+    res.json(Mock.mock(json))
+})
   // parse app.body
   // https://expressjs.com/en/4x/api.html#req.body
   app.use(bodyParser.json())

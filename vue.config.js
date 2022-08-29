@@ -34,9 +34,20 @@ module.exports = {
     open: true,
     overlay: {
       warnings: false,
-      errors: true
-    },
-    before: require('./mock/mock-server.js')
+      errors: true},
+    //before: require('./mock/mock-server.js')
+    proxy: {
+      [process.env.VUE_APP_BASE_API]: {
+        target: `http://42.192.5.249:8081`,
+        // true则请求端口与服务器相同，false则为本地服务器端口;用于控制请求头中的host值
+        changeOrigin: true,
+        // ws:false,  //用于webscocket
+        // 代理服务器将前缀process.env.VUE_APP_BASE_API变成空字符串发送给服务器
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        } 
+      }
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
@@ -87,7 +98,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()

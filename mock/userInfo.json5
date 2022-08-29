@@ -1,0 +1,9 @@
+{
+ id: '@id',// 随机数id
+ user_name: '@cname()',// 随机用户名
+ date: '@date()',// 随机日期
+ avatar: '@image("200x200","red", "#fff", "avatar")',// 随机图片
+ description: '@paragraph()',//随机描述
+ ip: '@ip()',// 随机ip
+ email: '@email()' 
+}

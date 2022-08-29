@@ -1,11 +1,15 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form ref="loginForm" 
+    :model="loginForm" 
+    :rules="loginRules" 
+    class="login-form" 
+    auto-complete="on" 
+    label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">智慧平安校园平台</h3>
       </div>
-
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -20,7 +24,6 @@
           auto-complete="on"
         />
       </el-form-item>
-
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
@@ -40,21 +43,19 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
-
+      <el-row style="text-align:center">
+        <el-checkbox v-model="accountTag" @change="accountTagChange">记住账号</el-checkbox>
+        <el-checkbox v-model="passwordTag" @change="passwordTagChange">记住密码</el-checkbox>
+      </el-row>
+      <br>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
     </el-form>
   </div>
 </template>
 
 <script>
 import { validUsername } from '@/utils/validate'
-
+import {login} from '@/api/user'
 export default {
   name: 'Login',
   data() {
@@ -73,9 +74,11 @@ export default {
       }
     }
     return {
+      accountTag:"",
+      passwordTag:"",
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: 'root',
+        password: '123456'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -95,7 +98,17 @@ export default {
     }
   },
   methods: {
-    showPwd() {
+    accountTagChange() {
+      if (!this.accountTag) {
+        this.passwordTag = false;
+      }
+    },
+    passwordTagChange() {
+      if (this.passwordTag) {
+        this.accountTag = true;
+      }
+    },
+    showPwd() { 
       if (this.passwordType === 'password') {
         this.passwordType = ''
       } else {
@@ -109,19 +122,29 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$store.dispatch('user/login', this.loginForm)
+          .then(() => {
+            // this.$router.push('/menu/index')
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
             this.loading = false
           })
+          // login({
+          //   username:this.loginForm.username,
+          //   password:this.loginForm.password
+          // }).then(res=>{
+          //   console.log(res)
+          // })
         } else {
           console.log('error submit!!')
           return false
-        }
-      })
+        } 
+      }) 
+    
     }
-  }
+  },
+  
 }
 </script>
 
@@ -132,7 +155,9 @@ export default {
 $bg:#283443;
 $light_gray:#fff;
 $cursor: #fff;
-
+* {
+  font-family: 微软雅黑;
+}
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
     color: $cursor;
@@ -173,35 +198,27 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
-
+* {
+  font-family: 微软雅黑;
+}
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
   overflow: hidden;
-
+  background: url("../../assets/img/ant-bg-1.png") no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
   .login-form {
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 100px 35px 0;
     margin: 0 auto;
     overflow: hidden;
-  }
-
-  .tips {
-    font-size: 14px;
-    color: #fff;
-    margin-bottom: 10px;
-
-    span {
-      &:first-of-type {
-        margin-right: 16px;
-      }
-    }
   }
 
   .svg-container {
@@ -214,13 +231,12 @@ $light_gray:#eee;
 
   .title-container {
     position: relative;
-
     .title {
       font-size: 26px;
       color: $light_gray;
       margin: 0px auto 40px auto;
       text-align: center;
-      font-weight: bold;
+      font-weight: 200;
     }
   }
 

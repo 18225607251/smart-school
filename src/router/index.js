@@ -36,7 +36,7 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
+ 
   {
     path: '/404',
     component: () => import('@/views/404'),
@@ -51,8 +51,103 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '智慧平安校园平台', icon: 'nested' }
     }]
+  },
+  
+  {
+    path: '/menu',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Menu',
+        component: () => import('@/views/menu/index'),
+        meta: { title: '菜单管理', icon: 'dashboard' }
+      }
+    ]
+  },
+  {
+    path: '/form',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: () => import('@/views/form/index'),
+        meta: { title: '组织架构', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/role',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Role',
+        component: () => import('@/views/role/index'),
+        meta: { title: '角色管理', icon: 'dashboard' }
+      }
+    ]
+  },
+  {
+    path: '/cust',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Cust',
+        component: () => import('@/views/cust/index'),
+        meta: { title: '用户管理', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/data',
+    component: Layout,
+    children: [ 
+      {
+        path: 'index',
+        name: 'Data',
+        component: () => import('@/views/data/index'),
+        meta: { title: '数据上报设置', icon: 'dashboard' }
+      }
+    ]
+  },
+  {
+    path: '/student',
+    component: Layout,
+    children: [ 
+      {
+        path: 'index',
+        name: 'Student',
+        component: () => import('@/views/student/index'),
+        meta: { title: '学生管理', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/testform',
+    component: Layout,
+    children: [ 
+      {
+        path:'index',
+        name: 'Testform',
+        component: () => import('@/views/testform/index'),
+        meta: { title: '测试组织架构', icon: 'form' }
+      }]
+  },
+  {
+    path: '/testcust',
+    component: Layout,
+    children: [ 
+      {
+        path:'index',
+        name: 'Testcust',
+        component: () => import('@/views/testcust/index'),
+        meta: { title: '测试用户管理', icon: 'form' }
+      }]
   },
 
   {
@@ -73,19 +168,6 @@ export const constantRoutes = [
         name: 'Tree',
         component: () => import('@/views/tree/index'),
         meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
       }
     ]
   },

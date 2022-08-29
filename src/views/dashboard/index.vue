@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+    <div class="dashboard-text">智慧平安校园平台 {{ name }}</div>
   </div>
 </template>
 

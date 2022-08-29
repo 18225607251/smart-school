@@ -5,7 +5,14 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  name: 'App'
+  name: 'App',
+  // mounted() {
+  //   axios.get('user/userInfo')
+  //   .then(res => {
+  //     console.log(res)
+  //   })
+  // }
 }
 </script>

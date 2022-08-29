@@ -62,7 +62,7 @@ export default {
       list: null,
       listLoading: true
     }
-  },
+  }, 
   created() {
     this.fetchData()
   },
